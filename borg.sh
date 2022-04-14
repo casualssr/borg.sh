@@ -27,7 +27,7 @@ then
        echo "Archive name not provided!"
        exit 22
    fi
-   sshpass -v -f $SSHPASSFILE -P $PATTERN borg delete $BORGSERVER$REMOTEPATH::"$2" --stats -p
+   sshpass -v -f $SSHPASSFILE -P $PATTERN borg delete $BORGSERVER$REMOTEPATH::$2 --stats -p
 elif [[ $1 == "extract" ]]
 then
    if [[ -z "$2" ]]
@@ -35,7 +35,7 @@ then
        echo "Archive name not provided!"
        exit 22
    fi
-   sshpass -v -f $SSHPASSFILE -P $PATTERN borg extract $BORGSERVER$REMOTEPATH::"$2" --stats -p
+   sshpass -v -f $SSHPASSFILE -P $PATTERN borg extract $BORGSERVER$REMOTEPATH::$2 --stats -p
 else
    echo "No arguments supplied!"
 fi
