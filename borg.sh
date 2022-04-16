@@ -36,6 +36,34 @@ then
        exit 22
    fi
    sshpass -v -f $SSHPASSFILE -P $PATTERN borg extract $BORGSERVER$REMOTEPATH::$2 --stats -p
+elif [[ $1 == "check" ]]
+then
+   retVal=$?
+   sshpass -v -f $SSHPASSFILE -P $PATTERN borg check $BORGSERVER$REMOTEPATH -p --verify-data
+   if [[ $retVal -eq 1 ]]
+   then
+       echo "Borg check completed. There are errors, exit code: "$retVal
+       exit 1
+   else
+       echo "Borg check completed. No errors, exit code: "$retVal
+   fi
+elif [[ $1 == "checkarch" ]]
+then
+   retVal=$?
+   sshpass -v -f $SSHPASSFILE -P $PATTERN borg check $BORGSERVER$REMOTEPATH::$2 -p --verify-data
+   if [[ -z "$2" ]]
+   then
+       echo "Archive name not provided!"
+       exit 22
+   else
+       if [[ $retVal -eq 1 ]]
+       then
+           echo "Borg checkarch completed. There are errors, exit code: "$retVal
+       exit 1
+       else
+           echo "Borg checkarch completed. No errors, exit code: "$retVal
+       fi
+   fi
 else
    echo "No arguments supplied!"
 fi
