@@ -3,7 +3,7 @@ function help(){
     echo "  borg.sh [options] "
     echo "options:"
     echo "list"
-    echo "create + name"
+    echo "backup + directory + name"
     echo "delete + name"
     echo "reconfigure"
 
@@ -13,21 +13,21 @@ function reconfigure(){
     setup 
 }
 function createbackup(){
-   #still to test
-   name=$2
-    declare -a array
-    i=0
-    pwdlogin=0
-    while IFS= read -r line; do
-        a=$(echo $line | cut -d '=' -f2)
-        if [[ $a == *password* ]]; then
-            export BORG_PASSCOMMAND="$a"
-        fi
-        array[i]=$a
-        i=$((i+1))
-    done < $FILE
-   cmd="borg create -p --stats --compression zstd,12 ssh://rick@backup.rickyscloud.com:22${array[3]}::deb-{now:%Y-%m-%d} '$name'"
-   echo $cmd
+   dir=$2
+   name=$3
+   declare -a array
+   i=0
+   pwdlogin=0
+   while IFS= read -r line; do
+      a=$(echo $line | cut -d '=' -f2)
+      if [[ $a == *password* ]]; then
+         export BORG_PASSCOMMAND="$a"
+      fi
+      array[i]=$a
+      i=$((i+1))
+   done < $FILE
+   cmd="borg create -p --stats --compression zstd,12 ssh://${array[0]}@${array[1]}:${array[2]}${array[3]}::$name-{now:%Y-%m-%d} '$dir'"
+   $cmd
 }
 function list(){
     declare -a array
@@ -87,7 +87,7 @@ if test -f "$FILE"; then
       list
    fi
    if [ "$1" = "backup" ]; then
-      createbackup $1 $2
+      createbackup $1 $2 $3
    fi
 else 
     setup 
