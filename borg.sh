@@ -17,10 +17,10 @@ function list(){
     i=0
     pwdlogin=0
     while IFS= read -r line; do
-        #crop everything before = in $line
         a=$(echo $line | cut -d '=' -f2)
         if [[ $a == *password* ]]; then
-            pwdlogin=1
+            #could this work 🧐?
+            export BORG_PASSCOMMAND="$a"
         fi
         array[i]=$a
         i=$((i+1))
