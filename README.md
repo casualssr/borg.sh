@@ -37,7 +37,7 @@ This variable contains the name of the backup followed by the current date separ
 The date is used to identify backups by the time of their creation.
 
 # Commands
-In this script you can find 5 different commands that are specified as an argument. It doesn't require any arguments
+In this script you can find 7 different commands that are specified as an argument. It doesn't require any arguments
 ### `./borg.sh list`
 This command allows you to list all the backups made to the borg repository. 
 
@@ -73,5 +73,14 @@ Example: `./borg.sh delete BackupName`
 ### `./borg.sh extract`
 This command allows you to extract a backup from the borg repository to the current folder. Requires the name of the backup as second argument.<br>
 Example: `./borg.sh extract BackupName`
+
+### `./borg.sh check`
+This command allows you to check the integrity of a repository. It doesn't require any arguments.<br>
+By default `--verify-data` options is enabled. It takes more time but it's the safest option for intergrity check.
+
+### `./borg.sh checkarch`
+This command allows you to check the integrity of a backup archive. It requires the name of the backup.<br>
+By default `--verify-data` options is enabled. It takes more time but it's the safest option for intergrity check.
+Example: `./borg.sh checkarch BackupName`
 
 # **This is FREE software and i don't take responsability on whatever you do with this!**
