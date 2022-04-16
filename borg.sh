@@ -10,7 +10,7 @@ arg2err () {
    if [[ -z "$2" ]]
    then
        echo "Archive name not provided!"
-       exit 22
+       exit 2
    fi
 }
 
