@@ -80,7 +80,7 @@ By default `--verify-data` options is enabled. It takes more time but it's the s
 
 ### `./borg.sh checkarch`
 This command allows you to check the integrity of a backup archive. It requires the name of the backup.<br>
-By default `--verify-data` options is enabled. It takes more time but it's the safest option for intergrity check.
+By default `--verify-data` options is enabled. It takes more time but it's the safest option for intergrity check.<br>
 Example: `./borg.sh checkarch BackupName`
 
 # **This is FREE software and i don't take responsability on whatever you do with this!**
