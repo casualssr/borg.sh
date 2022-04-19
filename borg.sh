@@ -31,7 +31,7 @@ then
 elif [[ $1 == "extract" ]]
 then
    arg2err
-   sshpass -v -f $SSHPASSFILE -P $PATTERN borg extract $BORGSERVER$REMOTEPATH::$2 --stats -p
+   sshpass -v -f $SSHPASSFILE -P $PATTERN borg extract $BORGSERVER$REMOTEPATH::$2 -p
 elif [[ $1 == "check" ]]
 then
    retVal=$?
