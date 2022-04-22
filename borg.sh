@@ -6,6 +6,28 @@ function help(){
     echo "backup + directory + name"
     echo "delete + name"
     echo "reconfigure"
+    echo "restore"
+}
+function restore(){
+   dir=$2
+   name=$3
+   declare -a array
+   i=0
+   pwdlogin=0
+   while IFS= read -r line; do
+      a=$(echo $line | cut -d '=' -f2)
+      if [[ $a == *password* ]]; then
+         export BORG_PASSCOMMAND="$a"
+      fi
+      array[i]=$a
+      i=$((i+1))
+   done < $FILE
+    list="borg create -p --stats --compression zstd,12 ssh://${array[0]}@${array[1]}:${array[2]}${array[3]}::$name-{now:%Y-%m-%d} '$dir'"
+   $list
+    echo "insert the name of the backup that you would like to restore"
+    read name
+   cmd="borg extract ssh://${array[0]}@${array[1]}:${array[2]}${array[3]}::$name -p"
+   $cmd
 
 }
 function reconfigure(){
@@ -88,6 +110,9 @@ if test -f "$FILE"; then
    fi
    if [ "$1" = "backup" ]; then
       createbackup $1 $2 $3
+   fi
+   if [ "$1" = "restore" ]; then
+      restore $1 $2 $3
    fi
 else 
     setup 
