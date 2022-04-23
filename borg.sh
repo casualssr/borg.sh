@@ -22,10 +22,10 @@ function restore(){
       array[i]=$a
       i=$((i+1))
    done < $FILE
-    list="borg create -p --stats --compression zstd,12 ssh://${array[0]}@${array[1]}:${array[2]}${array[3]}::$name-{now:%Y-%m-%d} '$dir'"
+   list="borg list ssh://${array[0]}@${array[1]}:${array[2]}${array[3]}"
    $list
-    echo "insert the name of the backup that you would like to restore"
-    read name
+   echo "insert the name of the backup that you would like to restore"
+   read name
    cmd="borg extract ssh://${array[0]}@${array[1]}:${array[2]}${array[3]}::$name -p"
    $cmd
 
@@ -117,4 +117,3 @@ if test -f "$FILE"; then
 else 
     setup 
 fi
-
